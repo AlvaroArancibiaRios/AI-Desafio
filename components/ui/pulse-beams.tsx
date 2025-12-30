@@ -133,7 +133,7 @@ const SVGs = ({ beams, width, height, baseColor, accentColor, gradientColors }: 
             gradientUnits="userSpaceOnUse"
             initial={beam.gradientConfig.initial}
             animate={beam.gradientConfig.animate}
-            transition={beam.gradientConfig.transition}
+            transition={beam.gradientConfig.transition as any}
           >
             <GradientColors colors={gradientColors} />
           </motion.linearGradient>
