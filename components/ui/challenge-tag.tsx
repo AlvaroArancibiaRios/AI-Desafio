@@ -20,10 +20,10 @@ export function ChallengeTag({
       onClick={onClick}
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={() => setIsHovered(false)}
-      className="group relative flex items-center gap-5 rounded-full border-2 border-white/[0.12] bg-white/[0.03] px-12 py-6 transition-all duration-500 ease-out hover:border-[#98e024]/40 hover:bg-white/[0.06] hover:shadow-[0_0_30px_rgba(152,224,36,0.15)]"
+      className="group relative flex items-center gap-5 rounded-full border-2 border-white/[0.12] bg-white/[0.03] px-16 py-6 transition-all duration-500 ease-out hover:border-[#98e024]/40 hover:bg-white/[0.06] hover:shadow-[0_0_30px_rgba(152,224,36,0.15)]"
     >
       {/* Live pulse indicator */}
-      <div className="relative flex items-center justify-center pl-2 pr-1">
+      <div className="relative flex items-center justify-center pl-3 pr-2">
         <span className="relative flex h-2 w-2">
           <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-[#98e024] opacity-75" />
           <span className="relative inline-flex h-2 w-2 rounded-full bg-[#98e024]" />
@@ -31,7 +31,7 @@ export function ChallengeTag({
       </div>
 
       {/* Text content */}
-      <div className="relative flex items-center justify-center overflow-hidden min-w-[180px]">
+      <div className="relative flex items-center justify-center overflow-hidden min-w-[220px]">
         <span
           className="text-lg font-semibold text-white uppercase tracking-wider transition-all duration-500 whitespace-nowrap"
           style={{
@@ -54,7 +54,7 @@ export function ChallengeTag({
       </div>
 
       {/* Arrow indicator */}
-      <div className="pl-1 pr-2">
+      <div className="pl-2 pr-3">
         <svg
           className="h-4 w-4 text-white/60 transition-all duration-300"
           style={{

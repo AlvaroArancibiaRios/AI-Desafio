@@ -150,14 +150,14 @@ function HeroGeometric({
                 />
             </div>
 
-            <div className="relative z-10 container mx-auto px-4 md:px-6">
-                <div className="max-w-3xl mx-auto text-center">
+            <div className="relative z-10 container mx-auto px-6 md:px-8 py-12 md:py-16">
+                <div className="max-w-4xl mx-auto text-center flex flex-col items-center">
                     <motion.div
                         custom={0}
                         variants={fadeUpVariants}
                         initial="hidden"
                         animate="visible"
-                        className="inline-flex items-center gap-4 px-10 py-5 rounded-full bg-white/[0.03] border-2 border-white/[0.08] mb-8 md:mb-12"
+                        className="inline-flex items-center gap-4 px-10 py-5 rounded-full bg-white/[0.03] border-2 border-white/[0.08] mb-12 md:mb-16"
                     >
                         <span className="text-base font-bold text-[#98e024] tracking-wide uppercase">Platzi</span>
                         <span className="text-white/40 text-lg">·</span>
@@ -171,8 +171,9 @@ function HeroGeometric({
                         variants={fadeUpVariants}
                         initial="hidden"
                         animate="visible"
+                        className="w-full"
                     >
-                        <h1 className="text-4xl sm:text-6xl md:text-8xl font-bold mb-6 md:mb-8 tracking-tight">
+                        <h1 className="text-4xl sm:text-6xl md:text-8xl font-bold mb-8 md:mb-12 tracking-tight">
                             <span className="bg-clip-text text-transparent bg-gradient-to-b from-white to-white/80">
                                 {title1}
                             </span>
@@ -192,8 +193,9 @@ function HeroGeometric({
                         variants={fadeUpVariants}
                         initial="hidden"
                         animate="visible"
+                        className="w-full flex justify-center"
                     >
-                        <p className="text-base sm:text-lg md:text-xl text-white/40 mb-8 leading-relaxed font-light tracking-wide max-w-2xl mx-auto px-4">
+                        <p className="text-base sm:text-lg md:text-xl text-white/40 mb-16 md:mb-[100px] leading-relaxed font-light tracking-wide text-center max-w-2xl px-4">
                             {description}
                         </p>
                     </motion.div>
@@ -203,7 +205,6 @@ function HeroGeometric({
                         variants={fadeUpVariants}
                         initial="hidden"
                         animate="visible"
-                        className="flex justify-center"
                     >
                         <ChallengeTag
                             mainText={buttonText}
