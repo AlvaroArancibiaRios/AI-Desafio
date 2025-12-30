@@ -1,0 +1,1484 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Reto AI-Native 21 Días | Platzi</title>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-primary: #0f0f0f;
+            --bg-secondary: #1a1a1a;
+            --bg-card: #232323;
+            --bg-hover: #2a2a2a;
+            --text-primary: #ffffff;
+            --text-secondary: #a0a0a0;
+            --text-muted: #666;
+            --accent-green: #98e024;
+            --accent-cyan: #67d8ef;
+            --accent-pink: #f92672;
+            --accent-orange: #fd971f;
+            --accent-purple: #ae81ff;
+            --border: rgba(255,255,255,0.08);
+            --border-light: rgba(255,255,255,0.12);
+            --shadow: 0 4px 24px rgba(0,0,0,0.4);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Outfit', sans-serif;
+            background: var(--bg-primary);
+            color: var(--text-primary);
+            min-height: 100vh;
+            line-height: 1.6;
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 40px 24px;
+        }
+
+        /* Header */
+        .header {
+            text-align: center;
+            margin-bottom: 48px;
+            position: relative;
+        }
+
+        .header::before {
+            content: '';
+            position: absolute;
+            top: -100px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 600px;
+            height: 400px;
+            background: radial-gradient(ellipse at center, rgba(152,224,36,0.08) 0%, transparent 70%);
+            pointer-events: none;
+        }
+
+        .badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            background: linear-gradient(135deg, var(--accent-green), #7bc41a);
+            color: #000;
+            padding: 6px 16px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 20px;
+        }
+
+        .badge svg {
+            width: 14px;
+            height: 14px;
+        }
+
+        h1 {
+            font-size: clamp(2.5rem, 6vw, 3.5rem);
+            font-weight: 700;
+            letter-spacing: -1px;
+            margin-bottom: 12px;
+            background: linear-gradient(135deg, #fff 0%, #a0a0a0 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .subtitle {
+            font-size: 1.1rem;
+            color: var(--text-secondary);
+            max-width: 600px;
+            margin: 0 auto 32px;
+        }
+
+        /* Progress Section */
+        .progress-section {
+            background: var(--bg-secondary);
+            border: 1px solid var(--border);
+            border-radius: 16px;
+            padding: 28px;
+            margin-bottom: 40px;
+        }
+
+        .progress-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 16px;
+        }
+
+        .progress-title {
+            font-size: 14px;
+            font-weight: 500;
+            color: var(--text-secondary);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .progress-stats {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+        }
+
+        .progress-count {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 1.5rem;
+            font-weight: 600;
+            color: var(--accent-green);
+        }
+
+        .progress-percentage {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 14px;
+            color: var(--text-muted);
+        }
+
+        .progress-bar-container {
+            height: 8px;
+            background: var(--bg-card);
+            border-radius: 10px;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .progress-bar {
+            height: 100%;
+            background: linear-gradient(90deg, var(--accent-green), #c8f05a);
+            border-radius: 10px;
+            transition: width 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+            position: relative;
+        }
+
+        .progress-bar::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+            animation: shimmer 2s infinite;
+        }
+
+        @keyframes shimmer {
+            0% { transform: translateX(-100%); }
+            100% { transform: translateX(100%); }
+        }
+
+        .dates-info {
+            display: flex;
+            gap: 24px;
+            margin-top: 20px;
+            padding-top: 20px;
+            border-top: 1px solid var(--border);
+        }
+
+        .date-item {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .date-icon {
+            width: 36px;
+            height: 36px;
+            background: var(--bg-card);
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .date-icon svg {
+            width: 18px;
+            height: 18px;
+            color: var(--accent-cyan);
+        }
+
+        .date-label {
+            font-size: 12px;
+            color: var(--text-muted);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .date-value {
+            font-weight: 500;
+            font-size: 14px;
+        }
+
+        /* Phase Sections */
+        .phase {
+            margin-bottom: 24px;
+            border: 1px solid var(--border);
+            border-radius: 16px;
+            overflow: hidden;
+            background: var(--bg-secondary);
+        }
+
+        .phase-header {
+            padding: 20px 24px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            cursor: pointer;
+            transition: background 0.2s;
+            user-select: none;
+        }
+
+        .phase-header:hover {
+            background: var(--bg-hover);
+        }
+
+        .phase-left {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+        }
+
+        .phase-number {
+            width: 40px;
+            height: 40px;
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-family: 'JetBrains Mono', monospace;
+            font-weight: 600;
+            font-size: 14px;
+        }
+
+        .phase-1 .phase-number { background: linear-gradient(135deg, var(--accent-cyan), #4eb8d4); color: #000; }
+        .phase-2 .phase-number { background: linear-gradient(135deg, var(--accent-orange), #e08a1a); color: #000; }
+        .phase-3 .phase-number { background: linear-gradient(135deg, var(--accent-purple), #9668e0); color: #fff; }
+        .phase-4 .phase-number { background: linear-gradient(135deg, var(--accent-pink), #d4205f); color: #fff; }
+        .phase-5 .phase-number { background: linear-gradient(135deg, var(--accent-green), #7bc41a); color: #000; }
+
+        .phase-info h2 {
+            font-size: 1.1rem;
+            font-weight: 600;
+            margin-bottom: 2px;
+        }
+
+        .phase-meta {
+            font-size: 13px;
+            color: var(--text-muted);
+        }
+
+        .phase-right {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+        }
+
+        .phase-progress {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 13px;
+            color: var(--text-secondary);
+            background: var(--bg-card);
+            padding: 4px 12px;
+            border-radius: 6px;
+        }
+
+        .phase-toggle {
+            width: 28px;
+            height: 28px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--text-muted);
+            transition: transform 0.3s;
+        }
+
+        .phase.open .phase-toggle {
+            transform: rotate(180deg);
+        }
+
+        .phase-content {
+            display: none;
+            padding: 0 24px 24px;
+        }
+
+        .phase.open .phase-content {
+            display: block;
+        }
+
+        .phase-objective {
+            background: var(--bg-card);
+            border-radius: 10px;
+            padding: 14px 18px;
+            margin-bottom: 20px;
+            font-size: 14px;
+            color: var(--text-secondary);
+            border-left: 3px solid;
+        }
+
+        .phase-1 .phase-objective { border-color: var(--accent-cyan); }
+        .phase-2 .phase-objective { border-color: var(--accent-orange); }
+        .phase-3 .phase-objective { border-color: var(--accent-purple); }
+        .phase-4 .phase-objective { border-color: var(--accent-pink); }
+        .phase-5 .phase-objective { border-color: var(--accent-green); }
+
+        /* Day Cards */
+        .day-card {
+            background: var(--bg-card);
+            border-radius: 12px;
+            padding: 18px 20px;
+            margin-bottom: 12px;
+            display: flex;
+            align-items: flex-start;
+            gap: 16px;
+            transition: all 0.2s;
+            border: 1px solid transparent;
+        }
+
+        .day-card:hover {
+            border-color: var(--border-light);
+            transform: translateX(4px);
+        }
+
+        .day-card.completed {
+            opacity: 0.6;
+        }
+
+        .day-card.completed .day-title {
+            text-decoration: line-through;
+            color: var(--text-muted);
+        }
+
+        .checkbox-wrapper {
+            flex-shrink: 0;
+            padding-top: 2px;
+        }
+
+        .checkbox {
+            width: 22px;
+            height: 22px;
+            border: 2px solid var(--border-light);
+            border-radius: 6px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.2s;
+            background: transparent;
+        }
+
+        .checkbox:hover {
+            border-color: var(--accent-green);
+        }
+
+        .checkbox.checked {
+            background: var(--accent-green);
+            border-color: var(--accent-green);
+        }
+
+        .checkbox svg {
+            width: 14px;
+            height: 14px;
+            color: #000;
+            opacity: 0;
+            transform: scale(0.5);
+            transition: all 0.2s;
+        }
+
+        .checkbox.checked svg {
+            opacity: 1;
+            transform: scale(1);
+        }
+
+        .day-content {
+            flex: 1;
+        }
+
+        .day-header {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 8px;
+        }
+
+        .day-badge {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 11px;
+            font-weight: 500;
+            padding: 3px 8px;
+            border-radius: 4px;
+            background: var(--bg-hover);
+            color: var(--text-secondary);
+        }
+
+        .day-date {
+            font-size: 12px;
+            color: var(--text-muted);
+        }
+
+        .day-title {
+            font-size: 1rem;
+            font-weight: 500;
+            margin-bottom: 6px;
+            transition: all 0.2s;
+        }
+
+        .day-topics {
+            font-size: 13px;
+            color: var(--text-muted);
+            margin-bottom: 12px;
+            line-height: 1.5;
+        }
+
+        .course-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 13px;
+            color: var(--accent-green);
+            text-decoration: none;
+            padding: 8px 14px;
+            background: rgba(152, 224, 36, 0.1);
+            border-radius: 8px;
+            transition: all 0.2s;
+            font-weight: 500;
+        }
+
+        .course-link:hover {
+            background: rgba(152, 224, 36, 0.2);
+            transform: translateY(-1px);
+        }
+
+        .course-link svg {
+            width: 14px;
+            height: 14px;
+        }
+
+        /* Footer */
+        .footer {
+            text-align: center;
+            padding: 40px 0;
+            color: var(--text-muted);
+            font-size: 14px;
+        }
+
+        .footer a {
+            color: var(--accent-green);
+            text-decoration: none;
+        }
+
+        .reset-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 10px 20px;
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            color: var(--text-secondary);
+            font-size: 13px;
+            cursor: pointer;
+            transition: all 0.2s;
+            margin-top: 20px;
+        }
+
+        .reset-btn:hover {
+            background: var(--bg-hover);
+            color: var(--text-primary);
+        }
+
+        /* Confetti */
+        .confetti-container {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 1000;
+            overflow: hidden;
+        }
+
+        .confetti {
+            position: absolute;
+            width: 10px;
+            height: 10px;
+            animation: fall 3s ease-out forwards;
+        }
+
+        @keyframes fall {
+            0% {
+                opacity: 1;
+                transform: translateY(-100px) rotate(0deg);
+            }
+            100% {
+                opacity: 0;
+                transform: translateY(100vh) rotate(720deg);
+            }
+        }
+
+        /* Celebration Modal */
+        .celebration-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.85);
+            display: none;
+            align-items: center;
+            justify-content: center;
+            z-index: 999;
+        }
+
+        .celebration-modal {
+            background: var(--bg-secondary);
+            border: 1px solid var(--border);
+            border-radius: 24px;
+            padding: 48px;
+            text-align: center;
+            max-width: 500px;
+            animation: popIn 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+
+        @keyframes popIn {
+            0% { transform: scale(0.8); opacity: 0; }
+            100% { transform: scale(1); opacity: 1; }
+        }
+
+        .celebration-icon {
+            font-size: 64px;
+            margin-bottom: 24px;
+        }
+
+        .celebration-title {
+            font-size: 2rem;
+            font-weight: 700;
+            margin-bottom: 16px;
+            background: linear-gradient(135deg, var(--accent-green), var(--accent-cyan));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .celebration-text {
+            color: var(--text-secondary);
+            margin-bottom: 32px;
+        }
+
+        .celebration-btn {
+            padding: 14px 32px;
+            background: linear-gradient(135deg, var(--accent-green), #7bc41a);
+            color: #000;
+            border: none;
+            border-radius: 10px;
+            font-size: 15px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: transform 0.2s;
+        }
+
+        .celebration-btn:hover {
+            transform: scale(1.05);
+        }
+
+        /* Mobile */
+        @media (max-width: 640px) {
+            .container {
+                padding: 24px 16px;
+            }
+
+            .progress-section {
+                padding: 20px;
+            }
+
+            .dates-info {
+                flex-direction: column;
+                gap: 12px;
+            }
+
+            .phase-header {
+                padding: 16px;
+            }
+
+            .phase-content {
+                padding: 0 16px 16px;
+            }
+
+            .day-card {
+                padding: 14px 16px;
+            }
+
+            .phase-info h2 {
+                font-size: 1rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header class="header">
+            <div class="badge">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor">
+                    <path d="M13 10V3L4 14h7v7l9-11h-7z"/>
+                </svg>
+                Reto 21 Días
+            </div>
+            <h1>AI-Native Challenge</h1>
+            <p class="subtitle">Construye tu sistema de trabajo con IA en 3 semanas. Cursos, clases en vivo y un proyecto final para transformar tu carrera.</p>
+        </header>
+
+        <section class="progress-section">
+            <div class="progress-header">
+                <span class="progress-title">Tu Progreso</span>
+                <div class="progress-stats">
+                    <span class="progress-count"><span id="completed-count">0</span>/21</span>
+                    <span class="progress-percentage" id="percentage">0%</span>
+                </div>
+            </div>
+            <div class="progress-bar-container">
+                <div class="progress-bar" id="progress-bar" style="width: 0%"></div>
+            </div>
+            <div class="dates-info">
+                <div class="date-item">
+                    <div class="date-icon">
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
+                        </svg>
+                    </div>
+                    <div>
+                        <div class="date-label">Inicio</div>
+                        <div class="date-value">12 de Enero 2025</div>
+                    </div>
+                </div>
+                <div class="date-item">
+                    <div class="date-icon">
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+                        </svg>
+                    </div>
+                    <div>
+                        <div class="date-label">Final</div>
+                        <div class="date-value">1 de Febrero 2025</div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- FASE 1 -->
+        <div class="phase phase-1 open" data-phase="1">
+            <div class="phase-header" onclick="togglePhase(this)">
+                <div class="phase-left">
+                    <div class="phase-number">01</div>
+                    <div class="phase-info">
+                        <h2>Mentalidad AI-Native</h2>
+                        <span class="phase-meta">Días 1-3 · Enero 12-14</span>
+                    </div>
+                </div>
+                <div class="phase-right">
+                    <span class="phase-progress" data-phase-progress="1">0/3</span>
+                    <div class="phase-toggle">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <polyline points="6 9 12 15 18 9"></polyline>
+                        </svg>
+                    </div>
+                </div>
+            </div>
+            <div class="phase-content">
+                <div class="phase-objective">
+                    🎯 <strong>Objetivo:</strong> Entender qué es ser AI-Native y empezar a usar AI todos los días.
+                </div>
+
+                <div class="day-card" data-day="1">
+                    <div class="checkbox-wrapper">
+                        <div class="checkbox" onclick="toggleDay(1)">
+                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3">
+                                <polyline points="20 6 9 17 4 12"></polyline>
+                            </svg>
+                        </div>
+                    </div>
+                    <div class="day-content">
+                        <div class="day-header">
+                            <span class="day-badge">DÍA 1</span>
+                            <span class="day-date">Enero 12</span>
+                        </div>
+                        <h3 class="day-title">Qué es ser AI-Native</h3>
+                        <p class="day-topics">Qué es IA, GenAI y LLMs · Qué problemas puede resolver hoy · Casos reales de productividad 10x</p>
+                        <a href="https://platzi.com/cursos/introduccion-ai/" target="_blank" class="course-link">
+                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <path d="M12 14l9-5-9-5-9 5 9 5z"></path>
+                                <path d="M12 14l6.16-3.422a12.083 12.083 0 01.665 6.479A11.952 11.952 0 0012 20.055a11.952 11.952 0 00-6.824-2.998 12.078 12.078 0 01.665-6.479L12 14z"></path>
+                            </svg>
+                            Curso de Introducción a la IA
+                        </a>
+                    </div>
+                </div>
+
+                <div class="day-card" data-day="2">
+                    <div class="checkbox-wrapper">
+                        <div class="checkbox" onclick="toggleDay(2)">
+                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3">
+                                <polyline points="20 6 9 17 4 12"></polyline>
+                            </svg>
+                        </div>
+                    </div>
+                    <div class="day-content">
+                        <div class="day-header">
+                            <span class="day-badge">DÍA 2</span>
+                            <span class="day-date">Enero 13</span>
+                        </div>
+                        <h3 class="day-title">Pensar en prompts, no en herramientas</h3>
+                        <p class="day-topics">Cómo piensa un modelo · Qué es un buen prompt · Estructura: rol, contexto, tarea, formato</p>
+                        <a href="https://platzi.com/cursos/prompt-engineering/" target="_blank" class="course-link">
+                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <path d="M12 14l9-5-9-5-9 5 9 5z"></path>
+                                <path d="M12 14l6.16-3.422a12.083 12.083 0 01.665 6.479A11.952 11.952 0 0012 20.055a11.952 11.952 0 00-6.824-2.998 12.078 12.078 0 01.665-6.479L12 14z"></path>
+                            </svg>
+                            Curso de Prompt Engineering
+                        </a>
+                    </div>
+                </div>
+
+                <div class="day-card" data-day="3">
+                    <div class="checkbox-wrapper">
+                        <div class="checkbox" onclick="toggleDay(3)">
+                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3">
+                                <polyline points="20 6 9 17 4 12"></polyline>
+                            </svg>
+                        </div>
+                    </div>
+                    <div class="day-content">
+                        <div class="day-header">
+                            <span class="day-badge">DÍA 3</span>
+                            <span class="day-date">Enero 14</span>
+                        </div>
+                        <h3 class="day-title">Tu copiloto diario</h3>
+                        <p class="day-topics">ChatGPT / Gemini / Claude como asistente personal · Pensamiento estratégico · Soporte de escritura y análisis</p>
+                        <a href="https://platzi.com/cursos/chatgpt/" target="_blank" class="course-link">
+                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <path d="M12 14l9-5-9-5-9 5 9 5z"></path>
+                                <path d="M12 14l6.16-3.422a12.083 12.083 0 01.665 6.479A11.952 11.952 0 0012 20.055a11.952 11.952 0 00-6.824-2.998 12.078 12.078 0 01.665-6.479L12 14z"></path>
+                            </svg>
+                            Curso de ChatGPT
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- FASE 2 -->
+        <div class="phase phase-2" data-phase="2">
+            <div class="phase-header" onclick="togglePhase(this)">
+                <div class="phase-left">
+                    <div class="phase-number">02</div>
+                    <div class="phase-info">
+                        <h2>Productividad y Creación</h2>
+                        <span class="phase-meta">Días 4-8 · Enero 15-19</span>
+                    </div>
+                </div>
+                <div class="phase-right">
+                    <span class="phase-progress" data-phase-progress="2">0/5</span>
+                    <div class="phase-toggle">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <polyline points="6 9 12 15 18 9"></polyline>
+                        </svg>
+                    </div>
+                </div>
+            </div>
+            <div class="phase-content">
+                <div class="phase-objective">
+                    🎯 <strong>Objetivo:</strong> Usar IA para crear, automatizar y producir más rápido.
+                </div>
+
+                <div class="day-card" data-day="4">
+                    <div class="checkbox-wrapper">
+                        <div class="checkbox" onclick="toggleDay(4)">
+                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3">
+                                <polyline points="20 6 9 17 4 12"></polyline>
+                            </svg>
+                        </div>
+                    </div>
+                    <div class="day-content">
+                        <div class="day-header">
+                            <span class="day-badge">DÍA 4</span>
+                            <span class="day-date">Enero 15</span>
+                        </div>
+                        <h3 class="day-title">AI en el trabajo real</h3>
+                        <p class="day-topics">Copilots en documentos, presentaciones y emails · IA como asistente de oficina</p>
+                        <a href="https://platzi.com/cursos/365-copilot/" target="_blank" class="course-link">
+                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <path d="M12 14l9-5-9-5-9 5 9 5z"></path>
+                                <path d="M12 14l6.16-3.422a12.083 12.083 0 01.665 6.479A11.952 11.952 0 0012 20.055a11.952 11.952 0 00-6.824-2.998 12.078 12.078 0 01.665-6.479L12 14z"></path>
+                            </svg>
+                            Curso de Microsoft 365 Copilot
+                        </a>
+                    </div>
+                </div>
+
+                <div class="day-card" data-day="5">
+                    <div class="checkbox-wrapper">
+                        <div class="checkbox" onclick="toggleDay(5)">
+                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3">
+                                <polyline points="20 6 9 17 4 12"></polyline>
+                            </svg>
+                        </div>
+                    </div>
+                    <div class="day-content">
+                        <div class="day-header">
+                            <span class="day-badge">DÍA 5</span>
+                            <span class="day-date">Enero 16</span>
+                        </div>
+                        <h3 class="day-title">Crear sin programar</h3>
+                        <p class="day-topics">Generar landings y páginas web con IA · Pensar en prototipos rápidos</p>
+                        <a href="https://platzi.com/cursos/lovable/" target="_blank" class="course-link">
+                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <path d="M12 14l9-5-9-5-9 5 9 5z"></path>
+                                <path d="M12 14l6.16-3.422a12.083 12.083 0 01.665 6.479A11.952 11.952 0 0012 20.055a11.952 11.952 0 00-6.824-2.998 12.078 12.078 0 01.665-6.479L12 14z"></path>
+                            </svg>
+                            Curso de Lovable
+                        </a>
+                    </div>
+                </div>
+
+                <div class="day-card" data-day="6">
+                    <div class="checkbox-wrapper">
+                        <div class="checkbox" onclick="toggleDay(6)">
+                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3">
+                                <polyline points="20 6 9 17 4 12"></polyline>
+                            </svg>
+                        </div>
+                    </div>
+                    <div class="day-content">
+                        <div class="day-header">
+                            <span class="day-badge">DÍA 6</span>
+                            <span class="day-date">Enero 17</span>
+                        </div>
+                        <h3 class="day-title">Automatizar tareas repetitivas</h3>
+                        <p class="day-topics">Qué es una automatización · Conectar herramientas con IA · Flujos básicos (trigger → acción → IA)</p>
+                        <a href="https://platzi.com/cursos/n8n-lowcode/" target="_blank" class="course-link">
+                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <path d="M12 14l9-5-9-5-9 5 9 5z"></path>
+                                <path d="M12 14l6.16-3.422a12.083 12.083 0 01.665 6.479A11.952 11.952 0 0012 20.055a11.952 11.952 0 00-6.824-2.998 12.078 12.078 0 01.665-6.479L12 14z"></path>
+                            </svg>
+                            Curso de Automatizaciones con n8n
+                        </a>
+                    </div>
+                </div>
+
+                <div class="day-card" data-day="7">
+                    <div class="checkbox-wrapper">
+                        <div class="checkbox" onclick="toggleDay(7)">
+                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3">
+                                <polyline points="20 6 9 17 4 12"></polyline>
+                            </svg>
+                        </div>
+                    </div>
+                    <div class="day-content">
+                        <div class="day-header">
+                            <span class="day-badge">DÍA 7</span>
+                            <span class="day-date">Enero 18</span>
+                        </div>
+                        <h3 class="day-title">Crear imágenes con IA</h3>
+                        <p class="day-topics">Modelos generativos de imagen · Prompting visual · Uso en marketing, branding y producto</p>
+                        <a href="https://platzi.com/cursos/imagenes-ai/" target="_blank" class="course-link">
+                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <path d="M12 14l9-5-9-5-9 5 9 5z"></path>
+                                <path d="M12 14l6.16-3.422a12.083 12.083 0 01.665 6.479A11.952 11.952 0 0012 20.055a11.952 11.952 0 00-6.824-2.998 12.078 12.078 0 01.665-6.479L12 14z"></path>
+                            </svg>
+                            Curso de Generación de Imágenes con IA
+                        </a>
+                    </div>
+                </div>
+
+                <div class="day-card" data-day="8">
+                    <div class="checkbox-wrapper">
+                        <div class="checkbox" onclick="toggleDay(8)">
+                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3">
+                                <polyline points="20 6 9 17 4 12"></polyline>
+                            </svg>
+                        </div>
+                    </div>
+                    <div class="day-content">
+                        <div class="day-header">
+                            <span class="day-badge">DÍA 8</span>
+                            <span class="day-date">Enero 19</span>
+                        </div>
+                        <h3 class="day-title">Crear videos con IA</h3>
+                        <p class="day-topics">Texto a video · Video para educación, marketing y redes · Pipelines simples de creación</p>
+                        <a href="https://platzi.com/cursos/video-ai/" target="_blank" class="course-link">
+                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <path d="M12 14l9-5-9-5-9 5 9 5z"></path>
+                                <path d="M12 14l6.16-3.422a12.083 12.083 0 01.665 6.479A11.952 11.952 0 0012 20.055a11.952 11.952 0 00-6.824-2.998 12.078 12.078 0 01.665-6.479L12 14z"></path>
+                            </svg>
+                            Curso de Creación de Videos con IA
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- FASE 3 -->
+        <div class="phase phase-3" data-phase="3">
+            <div class="phase-header" onclick="togglePhase(this)">
+                <div class="phase-left">
+                    <div class="phase-number">03</div>
+                    <div class="phase-info">
+                        <h2>Datos, Estrategia y Fundamentos</h2>
+                        <span class="phase-meta">Días 9-13 · Enero 20-24</span>
+                    </div>
+                </div>
+                <div class="phase-right">
+                    <span class="phase-progress" data-phase-progress="3">0/5</span>
+                    <div class="phase-toggle">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <polyline points="6 9 12 15 18 9"></polyline>
+                        </svg>
+                    </div>
+                </div>
+            </div>
+            <div class="phase-content">
+                <div class="phase-objective">
+                    🎯 <strong>Objetivo:</strong> Entender cómo funciona la IA por dentro y cómo usarla estratégicamente.
+                </div>
+
+                <div class="day-card" data-day="9">
+                    <div class="checkbox-wrapper">
+                        <div class="checkbox" onclick="toggleDay(9)">
+                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3">
+                                <polyline points="20 6 9 17 4 12"></polyline>
+                            </svg>
+                        </div>
+                    </div>
+                    <div class="day-content">
+                        <div class="day-header">
+                            <span class="day-badge">DÍA 9</span>
+                            <span class="day-date">Enero 20</span>
+                        </div>
+                        <h3 class="day-title">IA + Datos</h3>
+                        <p class="day-topics">Cómo la IA trabaja con datos · Limpieza, estructura y contexto · Casos de análisis asistido</p>
+                        <a href="https://platzi.com/cursos/ai-datos/" target="_blank" class="course-link">
+                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <path d="M12 14l9-5-9-5-9 5 9 5z"></path>
+                                <path d="M12 14l6.16-3.422a12.083 12.083 0 01.665 6.479A11.952 11.952 0 0012 20.055a11.952 11.952 0 00-6.824-2.998 12.078 12.078 0 01.665-6.479L12 14z"></path>
+                            </svg>
+                            Curso de AI para Manejo de Datos
+                        </a>
+                    </div>
+                </div>
+
+                <div class="day-card" data-day="10">
+                    <div class="checkbox-wrapper">
+                        <div class="checkbox" onclick="toggleDay(10)">
+                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3">
+                                <polyline points="20 6 9 17 4 12"></polyline>
+                            </svg>
+                        </div>
+                    </div>
+                    <div class="day-content">
+                        <div class="day-header">
+                            <span class="day-badge">DÍA 10</span>
+                            <span class="day-date">Enero 21</span>
+                        </div>
+                        <h3 class="day-title">Estrategia con GenAI</h3>
+                        <p class="day-topics">Dónde sí y dónde no usar IA · Casos empresariales reales · Liderar proyectos con IA</p>
+                        <a href="https://platzi.com/cursos/estrategia-proyectos-ai/" target="_blank" class="course-link">
+                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <path d="M12 14l9-5-9-5-9 5 9 5z"></path>
+                                <path d="M12 14l6.16-3.422a12.083 12.083 0 01.665 6.479A11.952 11.952 0 0012 20.055a11.952 11.952 0 00-6.824-2.998 12.078 12.078 0 01.665-6.479L12 14z"></path>
+                            </svg>
+                            Curso de Estrategia de Proyectos de Gen AI
+                        </a>
+                    </div>
+                </div>
+
+                <div class="day-card" data-day="11">
+                    <div class="checkbox-wrapper">
+                        <div class="checkbox" onclick="toggleDay(11)">
+                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3">
+                                <polyline points="20 6 9 17 4 12"></polyline>
+                            </svg>
+                        </div>
+                    </div>
+                    <div class="day-content">
+                        <div class="day-header">
+                            <span class="day-badge">DÍA 11</span>
+                            <span class="day-date">Enero 22</span>
+                        </div>
+                        <h3 class="day-title">Cómo funcionan los LLMs</h3>
+                        <p class="day-topics">Qué es un LLM · Tokens, embeddings, contexto · Limitaciones reales</p>
+                        <a href="https://platzi.com/cursos/llms/" target="_blank" class="course-link">
+                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <path d="M12 14l9-5-9-5-9 5 9 5z"></path>
+                                <path d="M12 14l6.16-3.422a12.083 12.083 0 01.665 6.479A11.952 11.952 0 0012 20.055a11.952 11.952 0 00-6.824-2.998 12.078 12.078 0 01.665-6.479L12 14z"></path>
+                            </svg>
+                            Curso de Fundamentos de LLMs
+                        </a>
+                    </div>
+                </div>
+
+                <div class="day-card" data-day="12">
+                    <div class="checkbox-wrapper">
+                        <div class="checkbox" onclick="toggleDay(12)">
+                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3">
+                                <polyline points="20 6 9 17 4 12"></polyline>
+                            </svg>
+                        </div>
+                    </div>
+                    <div class="day-content">
+                        <div class="day-header">
+                            <span class="day-badge">DÍA 12</span>
+                            <span class="day-date">Enero 23</span>
+                        </div>
+                        <h3 class="day-title">Herramientas AI para Developers</h3>
+                        <p class="day-topics">IDEs con IA · Debugging asistido · Productividad en código</p>
+                        <a href="https://platzi.com/cursos/herramientas-ai-developers/" target="_blank" class="course-link">
+                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <path d="M12 14l9-5-9-5-9 5 9 5z"></path>
+                                <path d="M12 14l6.16-3.422a12.083 12.083 0 01.665 6.479A11.952 11.952 0 0012 20.055a11.952 11.952 0 00-6.824-2.998 12.078 12.078 0 01.665-6.479L12 14z"></path>
+                            </svg>
+                            Curso de Herramientas AI para Developers
+                        </a>
+                    </div>
+                </div>
+
+                <div class="day-card" data-day="13">
+                    <div class="checkbox-wrapper">
+                        <div class="checkbox" onclick="toggleDay(13)">
+                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3">
+                                <polyline points="20 6 9 17 4 12"></polyline>
+                            </svg>
+                        </div>
+                    </div>
+                    <div class="day-content">
+                        <div class="day-header">
+                            <span class="day-badge">DÍA 13</span>
+                            <span class="day-date">Enero 24</span>
+                        </div>
+                        <h3 class="day-title">Editores de código con IA</h3>
+                        <p class="day-topics">Programar con IA como copiloto · Pair programming con modelos</p>
+                        <a href="https://platzi.com/cursos/cursor/" target="_blank" class="course-link">
+                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <path d="M12 14l9-5-9-5-9 5 9 5z"></path>
+                                <path d="M12 14l6.16-3.422a12.083 12.083 0 01.665 6.479A11.952 11.952 0 0012 20.055a11.952 11.952 0 00-6.824-2.998 12.078 12.078 0 01.665-6.479L12 14z"></path>
+                            </svg>
+                            Curso de Cursor AI Code Editor
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- FASE 4 -->
+        <div class="phase phase-4" data-phase="4">
+            <div class="phase-header" onclick="togglePhase(this)">
+                <div class="phase-left">
+                    <div class="phase-number">04</div>
+                    <div class="phase-info">
+                        <h2>Construcción Avanzada</h2>
+                        <span class="phase-meta">Días 14-18 · Enero 25-29</span>
+                    </div>
+                </div>
+                <div class="phase-right">
+                    <span class="phase-progress" data-phase-progress="4">0/5</span>
+                    <div class="phase-toggle">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <polyline points="6 9 12 15 18 9"></polyline>
+                        </svg>
+                    </div>
+                </div>
+            </div>
+            <div class="phase-content">
+                <div class="phase-objective">
+                    🎯 <strong>Objetivo:</strong> Construir sistemas reales con IA.
+                </div>
+
+                <div class="day-card" data-day="14">
+                    <div class="checkbox-wrapper">
+                        <div class="checkbox" onclick="toggleDay(14)">
+                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3">
+                                <polyline points="20 6 9 17 4 12"></polyline>
+                            </svg>
+                        </div>
+                    </div>
+                    <div class="day-content">
+                        <div class="day-header">
+                            <span class="day-badge">DÍA 14</span>
+                            <span class="day-date">Enero 25</span>
+                        </div>
+                        <h3 class="day-title">RAG: IA con conocimiento propio</h3>
+                        <p class="day-topics">Qué es RAG · Casos de uso reales (docs, PDFs, bases internas)</p>
+                        <a href="https://platzi.com/cursos/rag/" target="_blank" class="course-link">
+                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <path d="M12 14l9-5-9-5-9 5 9 5z"></path>
+                                <path d="M12 14l6.16-3.422a12.083 12.083 0 01.665 6.479A11.952 11.952 0 0012 20.055a11.952 11.952 0 00-6.824-2.998 12.078 12.078 0 01.665-6.479L12 14z"></path>
+                            </svg>
+                            Curso de RAG con Microsoft Azure
+                        </a>
+                    </div>
+                </div>
+
+                <div class="day-card" data-day="15">
+                    <div class="checkbox-wrapper">
+                        <div class="checkbox" onclick="toggleDay(15)">
+                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3">
+                                <polyline points="20 6 9 17 4 12"></polyline>
+                            </svg>
+                        </div>
+                    </div>
+                    <div class="day-content">
+                        <div class="day-header">
+                            <span class="day-badge">DÍA 15</span>
+                            <span class="day-date">Enero 26</span>
+                        </div>
+                        <h3 class="day-title">MCP y arquitecturas modernas</h3>
+                        <p class="day-topics">Qué es MCP · Conectar modelos, herramientas y datos</p>
+                        <a href="https://platzi.com/cursos/mcp/" target="_blank" class="course-link">
+                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <path d="M12 14l9-5-9-5-9 5 9 5z"></path>
+                                <path d="M12 14l6.16-3.422a12.083 12.083 0 01.665 6.479A11.952 11.952 0 0012 20.055a11.952 11.952 0 00-6.824-2.998 12.078 12.078 0 01.665-6.479L12 14z"></path>
+                            </svg>
+                            Curso de MCP con Microsoft Azure
+                        </a>
+                    </div>
+                </div>
+
+                <div class="day-card" data-day="16">
+                    <div class="checkbox-wrapper">
+                        <div class="checkbox" onclick="toggleDay(16)">
+                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3">
+                                <polyline points="20 6 9 17 4 12"></polyline>
+                            </svg>
+                        </div>
+                    </div>
+                    <div class="day-content">
+                        <div class="day-header">
+                            <span class="day-badge">DÍA 16</span>
+                            <span class="day-date">Enero 27</span>
+                        </div>
+                        <h3 class="day-title">Usar la OpenAI API</h3>
+                        <p class="day-topics">Llamadas a modelos · Tokens, costos y performance · Casos reales</p>
+                        <a href="https://platzi.com/cursos/openai-api/" target="_blank" class="course-link">
+                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <path d="M12 14l9-5-9-5-9 5 9 5z"></path>
+                                <path d="M12 14l6.16-3.422a12.083 12.083 0 01.665 6.479A11.952 11.952 0 0012 20.055a11.952 11.952 0 00-6.824-2.998 12.078 12.078 0 01.665-6.479L12 14z"></path>
+                            </svg>
+                            Curso de OpenAI API
+                        </a>
+                    </div>
+                </div>
+
+                <div class="day-card" data-day="17">
+                    <div class="checkbox-wrapper">
+                        <div class="checkbox" onclick="toggleDay(17)">
+                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3">
+                                <polyline points="20 6 9 17 4 12"></polyline>
+                            </svg>
+                        </div>
+                    </div>
+                    <div class="day-content">
+                        <div class="day-header">
+                            <span class="day-badge">DÍA 17</span>
+                            <span class="day-date">Enero 28</span>
+                        </div>
+                        <h3 class="day-title">Crear chatbots reales</h3>
+                        <p class="day-topics">Diseño conversacional · Memoria, contexto y flujos</p>
+                        <a href="https://platzi.com/cursos/openai-api-23/" target="_blank" class="course-link">
+                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <path d="M12 14l9-5-9-5-9 5 9 5z"></path>
+                                <path d="M12 14l6.16-3.422a12.083 12.083 0 01.665 6.479A11.952 11.952 0 0012 20.055a11.952 11.952 0 00-6.824-2.998 12.078 12.078 0 01.665-6.479L12 14z"></path>
+                            </svg>
+                            Curso de Desarrollo de Chatbots con OpenAI
+                        </a>
+                    </div>
+                </div>
+
+                <div class="day-card" data-day="18">
+                    <div class="checkbox-wrapper">
+                        <div class="checkbox" onclick="toggleDay(18)">
+                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3">
+                                <polyline points="20 6 9 17 4 12"></polyline>
+                            </svg>
+                        </div>
+                    </div>
+                    <div class="day-content">
+                        <div class="day-header">
+                            <span class="day-badge">DÍA 18</span>
+                            <span class="day-date">Enero 29</span>
+                        </div>
+                        <h3 class="day-title">Agentes de IA</h3>
+                        <p class="day-topics">Qué es un agente · Herramientas, decisiones y estados</p>
+                        <a href="https://platzi.com/cursos/agentes-langgraph/" target="_blank" class="course-link">
+                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <path d="M12 14l9-5-9-5-9 5 9 5z"></path>
+                                <path d="M12 14l6.16-3.422a12.083 12.083 0 01.665 6.479A11.952 11.952 0 0012 20.055a11.952 11.952 0 00-6.824-2.998 12.078 12.078 0 01.665-6.479L12 14z"></path>
+                            </svg>
+                            Curso de Agentes de AI con LangGraph
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- FASE 5 -->
+        <div class="phase phase-5" data-phase="5">
+            <div class="phase-header" onclick="togglePhase(this)">
+                <div class="phase-left">
+                    <div class="phase-number">05</div>
+                    <div class="phase-info">
+                        <h2>Profesional AI-Native</h2>
+                        <span class="phase-meta">Días 19-21 · Enero 30 - Febrero 1</span>
+                    </div>
+                </div>
+                <div class="phase-right">
+                    <span class="phase-progress" data-phase-progress="5">0/3</span>
+                    <div class="phase-toggle">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <polyline points="6 9 12 15 18 9"></polyline>
+                        </svg>
+                    </div>
+                </div>
+            </div>
+            <div class="phase-content">
+                <div class="phase-objective">
+                    🎯 <strong>Objetivo:</strong> Pensar como alguien que vive con IA todos los días.
+                </div>
+
+                <div class="day-card" data-day="19">
+                    <div class="checkbox-wrapper">
+                        <div class="checkbox" onclick="toggleDay(19)">
+                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3">
+                                <polyline points="20 6 9 17 4 12"></polyline>
+                            </svg>
+                        </div>
+                    </div>
+                    <div class="day-content">
+                        <div class="day-header">
+                            <span class="day-badge">DÍA 19</span>
+                            <span class="day-date">Enero 30</span>
+                        </div>
+                        <h3 class="day-title">Observabilidad y control</h3>
+                        <p class="day-topics">Medir agentes · Debugging de IA · Mejorar resultados</p>
+                        <a href="https://platzi.com/cursos/observabilidad-ai/" target="_blank" class="course-link">
+                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <path d="M12 14l9-5-9-5-9 5 9 5z"></path>
+                                <path d="M12 14l6.16-3.422a12.083 12.083 0 01.665 6.479A11.952 11.952 0 0012 20.055a11.952 11.952 0 00-6.824-2.998 12.078 12.078 0 01.665-6.479L12 14z"></path>
+                            </svg>
+                            Curso de Observabilidad de Agentes AI
+                        </a>
+                    </div>
+                </div>
+
+                <div class="day-card" data-day="20">
+                    <div class="checkbox-wrapper">
+                        <div class="checkbox" onclick="toggleDay(20)">
+                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3">
+                                <polyline points="20 6 9 17 4 12"></polyline>
+                            </svg>
+                        </div>
+                    </div>
+                    <div class="day-content">
+                        <div class="day-header">
+                            <span class="day-badge">DÍA 20</span>
+                            <span class="day-date">Enero 31</span>
+                        </div>
+                        <h3 class="day-title">Integración total</h3>
+                        <p class="day-topics">Conectar: Agentes + Automatizaciones + Datos + Interfaces · Repaso integrado (n8n + APIs + Agentes)</p>
+                        <a href="https://platzi.com/cursos/n8n-lowcode/" target="_blank" class="course-link">
+                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <path d="M12 14l9-5-9-5-9 5 9 5z"></path>
+                                <path d="M12 14l6.16-3.422a12.083 12.083 0 01.665 6.479A11.952 11.952 0 0012 20.055a11.952 11.952 0 00-6.824-2.998 12.078 12.078 0 01.665-6.479L12 14z"></path>
+                            </svg>
+                            Repaso: Cursos de n8n + APIs + Agentes
+                        </a>
+                    </div>
+                </div>
+
+                <div class="day-card" data-day="21">
+                    <div class="checkbox-wrapper">
+                        <div class="checkbox" onclick="toggleDay(21)">
+                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3">
+                                <polyline points="20 6 9 17 4 12"></polyline>
+                            </svg>
+                        </div>
+                    </div>
+                    <div class="day-content">
+                        <div class="day-header">
+                            <span class="day-badge">DÍA 21</span>
+                            <span class="day-date">Febrero 1</span>
+                        </div>
+                        <h3 class="day-title">Tu identidad AI-Native</h3>
+                        <p class="day-topics">Mostrar tu proyecto · Documentar tu sistema · Pensar en el siguiente nivel profesional</p>
+                        <div style="background: linear-gradient(135deg, rgba(152,224,36,0.1), rgba(103,216,239,0.1)); border-radius: 10px; padding: 16px; margin-top: 12px; border: 1px solid rgba(152,224,36,0.2);">
+                            <div style="font-weight: 600; margin-bottom: 8px; color: var(--accent-green);">🎯 Resultado Final:</div>
+                            <ul style="margin: 0; padding-left: 20px; color: var(--text-secondary); font-size: 14px; line-height: 1.8;">
+                                <li>Un proyecto funcional con IA</li>
+                                <li>Un flujo AI-end-to-end</li>
+                                <li>Mentalidad AI-Native instalada</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <footer class="footer">
+            <p>Reto AI-Native 2025 · <a href="https://platzi.com/c/desafioia/" target="_blank">Platzi</a></p>
+            <button class="reset-btn" onclick="resetProgress()">
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 8"/>
+                    <path d="M3 3v5h5"/>
+                </svg>
+                Reiniciar progreso
+            </button>
+        </footer>
+    </div>
+
+    <!-- Celebration Modal -->
+    <div class="celebration-overlay" id="celebration-overlay" onclick="closeCelebration()">
+        <div class="celebration-modal" onclick="event.stopPropagation()">
+            <div class="celebration-icon">🎉</div>
+            <h2 class="celebration-title">¡Felicidades!</h2>
+            <p class="celebration-text">Has completado el Reto AI-Native de 21 días. Ahora tienes la mentalidad y las herramientas para trabajar con IA todos los días.</p>
+            <button class="celebration-btn" onclick="closeCelebration()">¡Continuar!</button>
+        </div>
+    </div>
+
+    <div class="confetti-container" id="confetti-container"></div>
+
+    <script>
+        const STORAGE_KEY = 'ai-native-progress';
+        const TOTAL_DAYS = 21;
+        
+        // Phase configuration
+        const phases = {
+            1: { start: 1, end: 3 },
+            2: { start: 4, end: 8 },
+            3: { start: 9, end: 13 },
+            4: { start: 14, end: 18 },
+            5: { start: 19, end: 21 }
+        };
+
+        // Load progress from localStorage
+        function loadProgress() {
+            const saved = localStorage.getItem(STORAGE_KEY);
+            return saved ? JSON.parse(saved) : {};
+        }
+
+        // Save progress to localStorage
+        function saveProgress(progress) {
+            localStorage.setItem(STORAGE_KEY, JSON.stringify(progress));
+        }
+
+        // Toggle day completion
+        function toggleDay(day) {
+            const progress = loadProgress();
+            progress[day] = !progress[day];
+            saveProgress(progress);
+            updateUI();
+            
+            // Check for completion
+            const completedCount = Object.values(progress).filter(Boolean).length;
+            if (completedCount === TOTAL_DAYS) {
+                showCelebration();
+            }
+        }
+
+        // Toggle phase accordion
+        function togglePhase(header) {
+            const phase = header.closest('.phase');
+            phase.classList.toggle('open');
+        }
+
+        // Update all UI elements
+        function updateUI() {
+            const progress = loadProgress();
+            const completedCount = Object.values(progress).filter(Boolean).length;
+            const percentage = Math.round((completedCount / TOTAL_DAYS) * 100);
+
+            // Update main progress
+            document.getElementById('completed-count').textContent = completedCount;
+            document.getElementById('percentage').textContent = `${percentage}%`;
+            document.getElementById('progress-bar').style.width = `${percentage}%`;
+
+            // Update checkboxes and day cards
+            for (let day = 1; day <= TOTAL_DAYS; day++) {
+                const dayCard = document.querySelector(`[data-day="${day}"]`);
+                const checkbox = dayCard.querySelector('.checkbox');
+                
+                if (progress[day]) {
+                    checkbox.classList.add('checked');
+                    dayCard.classList.add('completed');
+                } else {
+                    checkbox.classList.remove('checked');
+                    dayCard.classList.remove('completed');
+                }
+            }
+
+            // Update phase progress
+            for (let phase = 1; phase <= 5; phase++) {
+                const { start, end } = phases[phase];
+                let phaseCompleted = 0;
+                const phaseTotal = end - start + 1;
+                
+                for (let day = start; day <= end; day++) {
+                    if (progress[day]) phaseCompleted++;
+                }
+                
+                const phaseProgressEl = document.querySelector(`[data-phase-progress="${phase}"]`);
+                if (phaseProgressEl) {
+                    phaseProgressEl.textContent = `${phaseCompleted}/${phaseTotal}`;
+                }
+            }
+        }
+
+        // Reset all progress
+        function resetProgress() {
+            if (confirm('¿Estás seguro de que quieres reiniciar todo tu progreso?')) {
+                localStorage.removeItem(STORAGE_KEY);
+                updateUI();
+            }
+        }
+
+        // Show celebration
+        function showCelebration() {
+            document.getElementById('celebration-overlay').style.display = 'flex';
+            createConfetti();
+        }
+
+        // Close celebration
+        function closeCelebration() {
+            document.getElementById('celebration-overlay').style.display = 'none';
+        }
+
+        // Create confetti effect
+        function createConfetti() {
+            const container = document.getElementById('confetti-container');
+            const colors = ['#98e024', '#67d8ef', '#f92672', '#fd971f', '#ae81ff'];
+            
+            for (let i = 0; i < 100; i++) {
+                const confetti = document.createElement('div');
+                confetti.className = 'confetti';
+                confetti.style.left = Math.random() * 100 + '%';
+                confetti.style.background = colors[Math.floor(Math.random() * colors.length)];
+                confetti.style.animationDelay = Math.random() * 2 + 's';
+                confetti.style.borderRadius = Math.random() > 0.5 ? '50%' : '0';
+                container.appendChild(confetti);
+            }
+
+            setTimeout(() => {
+                container.innerHTML = '';
+            }, 5000);
+        }
+
+        // Initialize on load
+        document.addEventListener('DOMContentLoaded', updateUI);
+    </script>
+</body>
+</html>
