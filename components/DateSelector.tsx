@@ -11,6 +11,7 @@ interface DateSelectorProps {
 
 export default function DateSelector({ currentStartDate, onDateSelect, onCancel }: DateSelectorProps) {
   const [selectedDate, setSelectedDate] = useState(formatDateForInput(currentStartDate));
+  const minDate = '2025-12-29'; // 29 de diciembre de 2025
 
   const handleSubmit = () => {
     const date = parseInputDate(selectedDate);
@@ -33,6 +34,7 @@ export default function DateSelector({ currentStartDate, onDateSelect, onCancel 
             type="date"
             className="date-input"
             value={selectedDate}
+            min={minDate}
             onChange={(e) => setSelectedDate(e.target.value)}
           />
         </div>
