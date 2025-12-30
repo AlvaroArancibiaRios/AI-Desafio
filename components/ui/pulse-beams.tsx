@@ -19,14 +19,7 @@ interface BeamPath {
       y1: string | string[];
       y2: string | string[];
     };
-    transition?: {
-      duration?: number;
-      repeat?: number;
-      repeatType?: string;
-      ease?: string;
-      repeatDelay?: number;
-      delay?: number;
-    };
+    transition?: any;
   };
   connectionPoints?: Array<{
     cx: number;
